@@ -1,0 +1,144 @@
+1)
+#include <iostream>
+#include <io.h>
+#include <fcntl.h>
+#include <sys/stat.h>
+#include <string>
+#include <fstream>
+using namespace std;
+
+int main()
+{
+    setlocale(0, "");
+    fstream fs;
+    fs.open("a.txt");
+    fs << "ccccc";
+    fs.close();
+
+    fstream fss;
+    fss.open("a.txt");
+    string aa;
+    getline(fss, aa);
+
+    cout << "Текст: " << aa << endl;
+
+    int fr[9999];
+    for (int i = 0; i < 9999; i++)
+    {
+        fr[i] = 0;
+    }
+
+    for (int i = 0; i < aa.length(); i++)
+    {
+        fr[aa[i] - 'a']++;
+    }
+    int max = 0;
+    int index = 0;
+    for (int i = 0; i < 9999; i++)
+    {
+        if (fr[i] > max)
+        {
+            index = i;
+            max = fr[i];
+        }
+    }
+    cout << "Буква: " << char(index + 'a') << endl;
+2)
+#include <iostream>
+#include <io.h>
+#include <fcntl.h>
+#include <sys/stat.h>
+#include <string>
+#include <fstream>
+using namespace std;
+
+int main()
+{
+ setlocale(0, "");
+
+ fstream fs;
+ fs.open("b.txt", fstream::out);
+ fs << "123\n111\n2\ndfgh22\n12345\n";
+ fs.close();
+
+ fstream fss;
+ fss.open("b.txt");
+ string aa;
+ string temp;
+ 
+ while (getline(fss, temp))
+ {
+  aa += temp + '\n';
+ }
+
+ int count = 0;
+
+ for (int i = 0; i < aa.length(); i++)
+ {
+  if (aa[i] == '\n' && i + 1 <= aa.length() && aa[i + 1] != '\n')
+  {
+   count += 1;
+  }
+ }
+
+ cout << aa << endl;
+
+ cout << count << endl;
+
+ return 0;
+}
+
+3)
+#include <iostream>
+#include <io.h>
+#include <fcntl.h>
+#include <sys/stat.h>
+#include <string>
+#include <fstream>
+
+using namespace std; 
+
+string getFile(string path)
+
+{
+ fstream fss;
+ fss.open(path);
+ string aa = "";
+ string temp;
+ while (getline(fss, temp))
+ {
+  if (aa != "")
+   aa += '\n';
+  aa += temp;
+ }
+ fss.close();
+ return aa;
+}
+int main()
+{
+ setlocale(0, "");
+
+ string f1;
+ string f2;
+ string fileOut;
+
+ cout << "Введите имя 1 файла(file1.txt): ";
+ cin >> f1;
+
+ cout << "Введите имя 2 файла(file2.txt): ";
+ cin >> f2;
+
+ cout << "Введите имя выходного файла: ";
+ cin >> fileOut;
+
+ string t1 = getFile(f1);
+ string t2 = getFile(f2);
+
+ fstream fs;
+ fs.open(fileOut, fstream::out);
+ fs << t1;
+ fs << t2;
+ fs.close();
+
+ return 0;
+}
